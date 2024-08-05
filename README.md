@@ -80,27 +80,9 @@ http://localhost:8080/
 | <kbd>POST /auth/login</kbd>     | register login [request details](#post-login-user)
 | <kbd>POST /tweets</kbd>     | create new tweet [request details](#post-create-tweet)
 | <kbd>DELETE /tweets/{tweetId}</kbd>     | delete a specific tweet [response details](#delete-tweet)
-
-
-| <kbd>GET /users</kbd>     | search all users [response details](#get-users-details)
-| <kbd>PUT /users/{userId}</kbd>     | update data for a specific user [request details](#put-user)
-| <kbd>DELETE /users/{userId}</kbd>     | delete a specific use [request details](#delete-user)
-| <kbd>POST /products</kbd>     | create a new product [request details](#post-product-create)
-| <kbd>GET /products/{productId}</kbd>     | search for a specific product [response details](#get-product-detail)
-| <kbd>GET /products</kbd>     | search all users [response details](#get-products-details)
-| <kbd>PUT /products/{productId}</kbd>     | update data for a specific product [request details](#put-product)
-| <kbd>DELETE /products/{productId}</kbd>     | deletes a specific product that has not yet been added to an order. [request details](#delete-product)
-| <kbd>POST /categories</kbd>     | create a new category [request details](#post-category-create)
-| <kbd>GET /categories</kbd>     | search all categories [response details](#get-categories-details)
-| <kbd>PUT /categories/{categoryId}</kbd>     | update data for a specific category [request details](#put-category)
-| <kbd>DELETE /categories/{categoryName}</kbd>     | deletes a specific category that has not yet been added to an product [request details](#delete-category)
-| <kbd>POST /orders</kbd>     | create a new order [request details](#post-order-create)
-| <kbd>GET /orders/{orderId}</kbd>     | search for a specific order [response details](#get-order-detail)
-| <kbd>GET /orders</kbd>     | search all orders [response details](#get-orders-details)
-| <kbd>POST /orders/{orderId}/items?productId={productId}&quantity={quantity}</kbd>     | add product to order [request details](#post-add-product-to-order)
-| <kbd>POST /orders/{orderId}/items/remove?productId={productId}</kbd>     | remove product to order [request details](#post-remove-product-to-order)
-| <kbd>POST /orders/{orderId}/payment</kbd>     | add payment to order [request details](#post-add-payment-to-order)
-| <kbd>POST /orders/{orderId}/cancel</kbd>     | delete order [request details](#delete-order)
+| <kbd>GET /tweets/feed</kbd>     | Get a paginated feed of tweets. [response details](#get-feed-tweets)
+| <kbd>POST /users/register</kbd>     | register a new user [request details](#post-register-user)
+| <kbd>GET /users</kbd>     | List all users. The user request must be ADMIN. [response details](#get-users)
 
 <H3>Endpoints: Auth</h3>
 <h4 id="post-login-user">POST /auth/login</h4>
@@ -133,7 +115,7 @@ http://localhost:8080/
 }
 ```
 **RESPONSE**
-```json
+```
 {
  HTTP 200 OK
 }
@@ -146,282 +128,88 @@ http://localhost:8080/
 ```
 
 **RESPONSE**
-```json
+```
 {
- HTTP 200 OK
+ HTTP 204 NO CONTENT
 }
 ```
+<h4 id="get-feed-tweets">GET /tweets/feed</h4>
 
-<h4 id="put-user">PUT /users/{userId}</h4>
-
-**REQUEST**
-```json
-{
-  "name": "Rayan silva Ferreira",
-  "phone": "(55) 5 5555-4444",
-  "password":  "desenvolvedor.java.backend"
-}
+**BEARER TOKEN**
 ```
-**RESPONSE**
-```json
-{
-  "user_id": 1
-}
+"accessToken": eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ0d2l0dGVyLWJhY2tlbmQiLCJzdWIiOiJkY2E3NWU2OS1lNGIxLTQwYTUtYWJkZi1jNjg1YzhjODZiZWIiLCJleHAiOjE3MjI4NjYyMDcsImlhdCI6MTcyMjg2NTkwNywic2NvcGUiOiJCQVNJQyJ9.
 ```
-<h4 id="delete-user">DELETE /users/{userId}</h4>
-
-**REQUEST**
-```json
-http://localhost:8080/users/1
-```
-
-<h3>Endpoints: Product</h3>
-<h4 id="post-product-create">POST /products</h4>
-
-**REQUEST**
-```json
-{
-  "name": "Kingston A2000 SSD 10000",
-  "brand": "Kingston",
-  "model": "A2000",
-  "description": "SSD Kingston A2000 NVMe PCIe, 250GB, até 2000MB/s de leitura.",
-  "price": 250.00,
-  "imgUrl": "http://example.com/img/kingston_a2000.jpg",
-  "categories": [
-    "Computers",
-    "Storage",
-    "Components"
-  ]
-}
-
-```
-**RESPONSE**
-```json
-{
-  "product_id": 1
-}
-```
-<h4 id="get-product-detail">GET /products/{productId}</h4>
 
 **RESPONSE**
 ```json
 {
-  "productId": 1,
-  "name": "Kingston A2000 SSD 10000",
-  "brand": "Kingston",
-  "model": "A2000",
-  "description": "SSD Kingston A2000 NVMe PCIe, 250GB, até 2000MB/s de leitura.",
-  "price": 250,
-  "imgUrl": "http://example.com/img/kingston_a2000.jpg",
-  "categories": [
-    {
-      "id": 1,
-      "name": "Computers"
-    },
-    {
-      "id": 2,
-      "name": "Components"
-    },
-    {
-      "id": 3,
-      "name": "Storage"
-    }
-  ]
+	"feedItems": [
+		{
+			"tweetId": 2,
+			"content": "Hello world!",
+			"username": "admin",
+			"createdAt": "2024-08-05T16:10:50.564005Z"
+		},
+		{
+			"tweetId": 1,
+			"content": "Tweet do admin",
+			"username": "admin",
+			"createdAt": "2024-08-05T16:10:35.416853Z"
+		}
+	],
+	"page": 0,
+	"pageSize": 10,
+	"totalPages": 1,
+	"totalElements": 2
 }
 ```
-<h4 id="get-products-details">GET /products</h4>
-
-**RESPONSE**
-```json
-{
-  "productId": 1,
-  "name": "Kingston A2000 SSD 10000",
-  "brand": "Kingston",
-  "model": "A2000",
-  "description": "SSD Kingston A2000 NVMe PCIe, 250GB, até 2000MB/s de leitura.",
-  "price": 250,
-  "imgUrl": "http://example.com/img/kingston_a2000.jpg",
-  "categories": [
-    {
-      "id": 1,
-      "name": "Computers"
-    },
-    {
-      "id": 2,
-      "name": "Components"
-    },
-    {
-      "id": 3,
-      "name": "Storage"
-    }
-  ]
-}
-others...
-```
-<h4 id="put-product">PUT /products/{productId}</h4>
+<H3>Endpoints: User</h3>
+<h4 id="post-register-user">POST /users/register</h4>
 
 **REQUEST**
 ```json
 {
-  "name": "Kingston A2000",
-  "brand": "Kingston AMD",
-  "model": "A2000",
-  "description": "SSD Kingston A2000 NVMe PCIe, 250GB, até 2000MB/s de leitura.",
-  "price": 250.00,
-  "imgUrl": "http://example.com/img/kingston_a2000.jpg",
-  "categories": [
-    "Computers",
-    "Casa"
-  ]
+  "username":"Joe",
+  "password": "JoeDoe@123"
 }
 ```
 **RESPONSE**
-```json
-{
-  "product_id": 1
-}
 ```
-<h4 id="delete-product">DELETE /products/{productId}</h4>
+HTTP 200 OK
+```
+<h4 id="get-users">GET /users</h4>
 
-**REQUEST**
-```json
-http://localhost:8080/users/1
+**BEARER TOKEN**
 ```
-<h3>Endpoints: Category</h3>
-<h4 id="post-category-create">POST /categories</h4>
-
-**REQUEST**
-```json
-{
-  "name": "Home"
-}
+"accessToken": eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ0d2l0dGVyLWJhY2tlbmQiLCJzdWIiOiJkY2E3NWU2OS1lNGIxLTQwYTUtYWJkZi1jNjg1YzhjODZiZWIiLCJleHAiOjE3MjI4NjYyMDcsImlhdCI6MTcyMjg2NTkwNywic2NvcGUiOiJCQVNJQyJ9.
 ```
-**RESPONSE**
-```json
-{
-  "category_id": 1
-}
-```
-<h4 id="get-categories-details">GET /categories</h4>
 
 **RESPONSE**
 ```json
-{
-  "id": 4,
-  "name": "Casa"
-}
-others...
-```
-<h4 id="put-category">PUT /categories/{categoryId}</h4>
-
-**REQUEST**
-```json
-{
-  "name": "Electrodomestication"
-}
-```
-**RESPONSE**
-```json
-{
-  "category_id": 1
-}
-```
-<h4 id="delete-categoryr">DELETE /categories/{categoryName}</h4>
-
-**REQUEST**
-```json
-http://localhost:8080/users/Electrodomestication
-```
-<H3>Endpoints: Order</h3>
-<h4 id="post-order-create">POST /orders</h4>
-
-**REQUEST**
-```json
-<h4 id="post-user-create">POST /users</h4>
-
-**REQUEST**
-```json
-{
-  "name":"Rayan silva",
-  "email": "rayan.dev@gmail.com",
-  "phone": "(99) 9 9999-9999",
-  "password": "dev.java@"
-}
-```
-**RESPONSE**
-```json
-{
-  "order_id": 1
-}
-```
-<h4 id="get-order-detail">GET /orders/{orderId}</h4>
-
-**RESPONSE**
-```json
-{
-  "orderId": 1,
-  "moment": "2024-07-16T04:35:07Z",
-  "status": "WAITING_PAYMENT",
-  "payment": null,
-  "client": {
-    "id": 2,
-    "name": "Jose",
-    "email": "joseSf20@gmail.com",
-    "phone": "(66) 9 9548-9538",
-    "password": "20d91281-5b69-47f5-b157-ad44036c9853"
-  },
-  "items": [],
-  "total": 0
-}
-```
-<h4 id="get-orders-details">GET /orders</h4>
-
-**RESPONSE**
-```json
-{
-  "orderId": 1,
-  "moment": "2024-07-16T04:35:07Z",
-  "status": "WAITING_PAYMENT",
-  "payment": null,
-  "client": {
-     "id": 2,
-     "name": "Jose",
-     "email": "joseSf20@gmail.com",
-     "phone": "(66) 9 9548-9538",
-     "password": "20d91281-5b69-47f5-b157-ad44036c9853"
-   },
-   "items": [],
-   "total": 0
-}
-others...
-```
-<h4 id="post-add-product-to-order">POST /orders/{orderId}/items?productId={productId}&quantity={quantity}</h4>
-
-**REQUEST**
-```json
-http://localhost:8080/users/1/items?productId=1&quantity=2
-```
-<h4 id="post-remove-product-to-order">POST /orders/{orderId}/items/remove?productId={productId}</h4>
-
-**REQUEST**
-```json
-http://localhost:8080/users/1/items/remove?productId=1
-```
-<h4 id="post-add-payment-to-order">POST /orders/{orderId}/payment</h4>
-
-**REQUEST**
-```json
-{
-  "moment": "2024-07-16T04:35:07Z",
-  "paymentMethod": "CARD",
-  "amount": 5500.0
-}
-```
-<h4 id="delete-order">POST /orders/{orderId}/cancel</h4>
-
-**REQUEST**
-```json
-http://localhost:8080/orders/1/cancel
+[
+	{
+		"id": "833fafbb-f114-4c3e-ac9b-ad8ef96479ad",
+		"username": "admin",
+		"password": "$2a$10$05GH9uOlz7Nm9lsqmOj7xuEDwQb.Y7lLhd31KfsDiBn0d8xeHm.3m",
+		"roles": [
+			{
+				"id": 1,
+				"name": "ADMIN"
+			}
+		]
+	},
+	{
+		"id": "dca75e69-e4b1-40a5-abdf-c685c8c86beb",
+		"username": "rayan",
+		"password": "$2a$10$WcroBxU0SdKgHsqYnpSRluTQW16.Rlv5XjB2DPWBVVcdb7jIYFohi",
+		"roles": [
+			{
+				"id": 2,
+				"name": "BASIC"
+			}
+		]
+	}
+]
 ```
 
 <h2 id="developer">👨‍💻 Developer</h2>
