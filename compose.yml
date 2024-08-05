@@ -1,0 +1,11 @@
+services:
+    mysql:
+        image: mysql:latest
+        container_name: mysql-container
+        environment:
+            MYSQL_ROOT_PASSWORD: 123
+            MYSQL_DATABASE: twitter
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: 123
+        ports:
+            - 3306:3306
