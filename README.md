@@ -79,10 +79,9 @@ http://localhost:8080/
 |----------------------|-----------------------------------------------------
 | <kbd>POST /auth/login</kbd>     | register login [request details](#post-login-user)
 | <kbd>POST /tweets</kbd>     | create new tweet [request details](#post-create-tweet)
+| <kbd>DELETE /tweets/{tweetId}</kbd>     | delete a specific tweet [response details](#delete-tweet)
 
 
-
-| <kbd>GET /users/{userId}</kbd>     | search for a specific user [response details](#get-user-detail)
 | <kbd>GET /users</kbd>     | search all users [response details](#get-users-details)
 | <kbd>PUT /users/{userId}</kbd>     | update data for a specific user [request details](#put-user)
 | <kbd>DELETE /users/{userId}</kbd>     | delete a specific use [request details](#delete-user)
