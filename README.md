@@ -12,6 +12,15 @@
     <b>Twitter Simplified is a backend application designed to simulate a microblogging social network similar to the old Twitter now X, offering basic functionalities such as user authentication, creating and managing tweets, and viewing tweet feeds. This application is built using Spring Boot and follows best practices for security, scalability and maintainability.</b>
 </p>
 
+<h2 id="functionalities">Functionalities</h2>
+
+- **Event registration:** Organizers can register new events, specifying details such as title, description and maximum number of participants allowed. Each event is identified by a unique slug generated automatically.
+- **User Registration:** Creation of new users with different roles, allowing differentiated management of permissions.
+- **User Authentication:** Implementation of secure login using JSON Web Tokens (JWT) for authentication and authorization.
+- **Creation and Deletion of Tweets:** Allows authenticated users to publish and delete tweets, with permission control based on authorship and roles.
+- **Feed Visualization:** Display of tweets in feed format, with pagination support to improve usability and performance.
+- **User Management:** Administrative functionality to list all registered users, accessible only to administrators.
+
 <h2 id="technologies">💻 Technologies</h2>
 
 - Java 17
